@@ -1,11 +1,11 @@
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
-python-multipart==0.0.20
+python-multipart==0.0.22
 pydantic==2.10.4
 pydantic-settings==2.7.0
 openai==1.61.0
 opencv-python-headless==4.11.0.86
-Pillow==11.1.0
+Pillow==12.1.1
 numpy==1.26.4
 slowapi==0.1.9
 tenacity==9.0.0
