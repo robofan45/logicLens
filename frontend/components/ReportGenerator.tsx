@@ -105,7 +105,7 @@ function buildReportHtml({
   faultsResult,
   correctionResult,
   uploadedImage,
-}: Omit<Props, never>): string {
+}: Props): string {
   const ts = new Date().toLocaleString();
   let html = `
     <h1 style="color:#60a5fa;font-size:28px;margin-bottom:4px;">LogicLens Analysis Report</h1>
