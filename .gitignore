@@ -2,3 +2,29 @@ __pycache__/
 *.pyc
 *.pyo
 *.pt
+*.pth
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables
+backend/.env
+
+# Node modules and build output
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env.local
+
+# YOLO training runs
+backend/runs/
+backend/datasets/
+
+# Python cache
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/

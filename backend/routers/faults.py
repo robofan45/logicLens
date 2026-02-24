@@ -153,20 +153,22 @@ def _rule_based_faults(elements: List[Dict[str, Any]]) -> List[Fault]:
         )
 
     # Rule 6 – Missing seal-in circuit (motor coil driven by start only, no parallel coil contact)
+    # Pre-build a per-rung index of NO contacts keyed by address to avoid O(n²) scan.
+    rung_no_contacts: Dict[int, Dict[str, List[str]]] = {}
+    for elem in elements:
+        if elem.get("element_type") == "NO_Contact":
+            r = elem.get("rung", -1)
+            addr = elem.get("address", "") or ""
+            rung_no_contacts.setdefault(r, {}).setdefault(addr, []).append(elem.get("id", ""))
+
+    element_by_id: Dict[str, Dict[str, Any]] = {e.get("id", ""): e for e in elements}
     for coil_addr, coil_ids in coil_addresses.items():
         for elem_id in coil_ids:
-            # Check if coil address appears as a NO contact on the same rung
-            coil_elem = next((e for e in elements if e.get("id") == elem_id), None)
+            coil_elem = element_by_id.get(elem_id)
             if coil_elem is None:
                 continue
             rung_num = coil_elem.get("rung", -1)
-            same_rung_no = [
-                e for e in elements
-                if e.get("rung") == rung_num
-                and e.get("element_type") == "NO_Contact"
-                and e.get("address") == coil_addr
-            ]
-            if not same_rung_no:
+            if not rung_no_contacts.get(rung_num, {}).get(coil_addr):
                 faults.append(
                     Fault(
                         fault_id=str(uuid.uuid4()),

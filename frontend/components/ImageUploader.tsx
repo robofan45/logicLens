@@ -36,7 +36,7 @@ export default function ImageUploader({ onUpload, isLoading }: Props) {
       return;
     }
     if (f.size > MAX_FILE_SIZE) {
-      setError('File too large. Maximum size is 5 MB.');
+      setError(`File too large. Maximum size is ${MAX_FILE_SIZE / (1024 * 1024)} MB.`);
       return;
     }
     setFile(f);
