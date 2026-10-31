@@ -1,0 +1,50 @@
+{
+ "opset": 12,
+ "input": [
+  "images",
+  [
+   1,
+   3,
+   736,
+   736
+  ],
+  "tensor(float)"
+ ],
+ "outputs": [
+  [
+   "output0",
+   [
+    1,
+    48,
+    11109
+   ]
+  ]
+ ],
+ "output_shape": [
+  1,
+  48,
+  11109
+ ],
+ "has_nms": false,
+ "nodes": 262,
+ "size_bytes": 12842998,
+ "metadata": {
+  "description": "LogicLens ladder-symbol detector (YOLOv8, synthetic dataset v2); classes = contract/classes.json",
+  "author": "Ultralytics",
+  "date": "2026-10-31T03:53:23.973476+04:00",
+  "version": "8.4.194",
+  "license": "AGPL-3.0 License (https://ultralytics.com/license)",
+  "docs": "https://docs.ultralytics.com",
+  "stride": "32",
+  "task": "detect",
+  "head": "Detect",
+  "batch": "1",
+  "imgsz": "[736, 736]",
+  "names": "{0: 'NO_Contact', 1: 'NC_Contact', 2: 'Positive_Transition', 3: 'Negative_Transition', 4: 'Output_Coil', 5: 'Negated_Coil', 6: 'Set_Coil', 7: 'Reset_Coil', 8: 'TON_Timer', 9: 'TOF_Timer', 10: 'RTO_Timer', 11: 'TP_Timer', 12: 'CTU_Counter', 13: 'CTD_Counter', 14: 'CTUD_Counter', 15: 'RES_Reset', 16: 'EQU_Equal', 17: 'NEQ_NotEqual', 18: 'GRT_GreaterThan', 19: 'LES_LessThan', 20: 'GEQ_GreaterEqual', 21: 'LEQ_LessEqual', 22: 'ADD_Addition', 23: 'SUB_Subtraction', 24: 'MUL_Multiplication', 25: 'DIV_Division', 26: 'MOV_Move', 27: 'OSR_OneShotRising', 28: 'OSF_OneShotFalling', 29: 'AND_Bitwise', 30: 'OR_Bitwise', 31: 'XOR_Bitwise', 32: 'NOT_Bitwise', 33: 'JMP_Jump', 34: 'LBL_Label', 35: 'JSR_Subroutine', 36: 'MCR_MasterControl', 37: 'END_End', 38: 'Horizontal_Wire', 39: 'Vertical_Wire', 40: 'Branch_Start', 41: 'Branch_End', 42: 'Power_Rail_Left', 43: 'Power_Rail_Right'}",
+  "args": "{'data': None, 'batch': 1, 'fraction': 1.0, 'quantize': None, 'nms': False, 'dynamic': False, 'simplify': False, 'opset': 12}",
+  "channels": "3",
+  "end2end": "False"
+ },
+ "max_abs_diff_vs_torch": 0.000335693359375,
+ "max_abs_diff_scores": 1.043081283569336e-06
+}

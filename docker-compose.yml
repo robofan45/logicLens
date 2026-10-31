@@ -1,0 +1,80 @@
+# LogicLens local stack: web (nginx) + API + Redis (shared rate limits across workers).
+#   docker compose up --build
+#   open http://localhost:8080          (the web app; /api is proxied to the backend)
+#   curl http://localhost:8000/health   (the API directly, loopback only)
+# Configure with environment variables or a .env file next to this file (never commit keys):
+#   ANTHROPIC_API_KEY=...  LOGICLENS_API_KEYS=...  LOGICLENS_YOLO_ONNX=/models/<file>.onnx
+name: logiclens
+
+services:
+  backend:
+    build: ./backend
+    image: logiclens-backend:dev
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY:-2}
+      LOGICLENS_ENGINE: ${LOGICLENS_ENGINE:-auto}
+      LOGICLENS_YOLO_ONNX: ${LOGICLENS_YOLO_ONNX:-/models/logiclens-yolov8n.onnx}
+      LOGICLENS_API_KEYS: ${LOGICLENS_API_KEYS:-}
+      LOGICLENS_CORS_ORIGINS: ${LOGICLENS_CORS_ORIGINS:-http://localhost:5173}
+      # trust X-Forwarded-For only from the web proxy below (rate limits key on the client IP)
+      FORWARDED_ALLOW_IPS: 172.28.0.10
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    volumes:
+      - ./ml/models:/models:ro            # trained YOLO .onnx files (read-only)
+    read_only: true                      # zero retention: nothing can be written...
+    tmpfs:
+      - /tmp:size=16m,mode=1777          # ...except a small in-memory /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      default:
+        ipv4_address: 172.28.0.20
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.4-alpine
+    # Rate-limit counters only: no persistence, bounded memory, not published on the host.
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "64mb",
+              "--maxmemory-policy", "volatile-ttl"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    image: logiclens-web:dev
+    ports:
+      - "127.0.0.1:8080:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777          # nginx pid + temp files
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      default:
+        ipv4_address: 172.28.0.10
+    restart: unless-stopped
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24

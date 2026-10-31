@@ -1,0 +1,280 @@
+{
+ "image": "ladder_logic_program_PLC1.webp",
+ "model": "logiclens-yolov8n.onnx",
+ "conf": 0.25,
+ "detections": [
+  {
+   "class": "Power_Rail_Left",
+   "conf": 0.617,
+   "box": [
+    82.0,
+    8.3,
+    88.6,
+    464.6
+   ]
+  },
+  {
+   "class": "Power_Rail_Right",
+   "conf": 0.516,
+   "box": [
+    824.1,
+    8.6,
+    838.2,
+    465.1
+   ]
+  },
+  {
+   "class": "Output_Coil",
+   "conf": 0.892,
+   "box": [
+    770.4,
+    71.6,
+    798.2,
+    88.9
+   ]
+  },
+  {
+   "class": "NO_Contact",
+   "conf": 0.889,
+   "box": [
+    261.6,
+    72.5,
+    285.0,
+    89.2
+   ]
+  },
+  {
+   "class": "NO_Contact",
+   "conf": 0.871,
+   "box": [
+    161.6,
+    72.8,
+    185.3,
+    89.3
+   ]
+  },
+  {
+   "class": "Output_Coil",
+   "conf": 0.899,
+   "box": [
+    770.2,
+    178.2,
+    798.0,
+    196.0
+   ]
+  },
+  {
+   "class": "NO_Contact",
+   "conf": 0.885,
+   "box": [
+    211.3,
+    179.5,
+    234.1,
+    196.3
+   ]
+  },
+  {
+   "class": "Branch_Start",
+   "conf": 0.721,
+   "box": [
+    159.8,
+    184.7,
+    167.0,
+    284.8
+   ]
+  },
+  {
+   "class": "Branch_End",
+   "conf": 0.701,
+   "box": [
+    284.2,
+    186.1,
+    290.8,
+    284.8
+   ]
+  },
+  {
+   "class": "NO_Contact",
+   "conf": 0.899,
+   "box": [
+    210.8,
+    272.8,
+    235.0,
+    288.8
+   ]
+  },
+  {
+   "class": "Output_Coil",
+   "conf": 0.847,
+   "box": [
+    771.0,
+    364.8,
+    798.0,
+    382.1
+   ]
+  },
+  {
+   "class": "NC_Contact",
+   "conf": 0.888,
+   "box": [
+    259.1,
+    365.1,
+    284.0,
+    382.0
+   ]
+  },
+  {
+   "class": "NC_Contact",
+   "conf": 0.879,
+   "box": [
+    356.9,
+    365.4,
+    382.7,
+    382.2
+   ]
+  },
+  {
+   "class": "NC_Contact",
+   "conf": 0.893,
+   "box": [
+    162.0,
+    365.6,
+    186.7,
+    381.7
+   ]
+  }
+ ],
+ "hand_labels": 14,
+ "hits": 13,
+ "localised_wrong_class": 0,
+ "missed": [
+  "Power_Rail_Right"
+ ],
+ "matches": [
+  {
+   "truth": "Power_Rail_Left",
+   "pred": "Power_Rail_Left",
+   "conf": 0.617,
+   "iou": 0.919,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "Power_Rail_Right",
+   "pred": "Power_Rail_Right",
+   "conf": 0.516,
+   "iou": 0.487,
+   "class_ok": true,
+   "hit": false
+  },
+  {
+   "truth": "NO_Contact",
+   "pred": "NO_Contact",
+   "conf": 0.871,
+   "iou": 0.854,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "NO_Contact",
+   "pred": "NO_Contact",
+   "conf": 0.889,
+   "iou": 0.8,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "Output_Coil",
+   "pred": "Output_Coil",
+   "conf": 0.892,
+   "iou": 0.831,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "NO_Contact",
+   "pred": "NO_Contact",
+   "conf": 0.885,
+   "iou": 0.838,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "Output_Coil",
+   "pred": "Output_Coil",
+   "conf": 0.899,
+   "iou": 0.82,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "NO_Contact",
+   "pred": "NO_Contact",
+   "conf": 0.899,
+   "iou": 0.863,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "Branch_Start",
+   "pred": "Branch_Start",
+   "conf": 0.721,
+   "iou": 0.95,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "Branch_End",
+   "pred": "Branch_End",
+   "conf": 0.701,
+   "iou": 0.931,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "NC_Contact",
+   "pred": "NC_Contact",
+   "conf": 0.893,
+   "iou": 0.852,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "NC_Contact",
+   "pred": "NC_Contact",
+   "conf": 0.888,
+   "iou": 0.899,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "NC_Contact",
+   "pred": "NC_Contact",
+   "conf": 0.879,
+   "iou": 0.917,
+   "class_ok": true,
+   "hit": true
+  },
+  {
+   "truth": "Output_Coil",
+   "pred": "Output_Coil",
+   "conf": 0.847,
+   "iou": 0.829,
+   "class_ok": true,
+   "hit": true
+  }
+ ],
+ "false_positives": [],
+ "assembled_llt": [
+  "XIC(I:1/1)XIC(I:1/2)OTE(B:0/1);",
+  "[XIC(I:1/3),XIC(B:0/1)]OTE(O:2/1);",
+  "XIO(I:1/1)XIO(I:1/2)XIO(I:1/3)OTE(O:2/2);"
+ ],
+ "assembler_warnings": [],
+ "ground_truth_llt": [
+  "XIC(I:1/1)XIC(I:1/2)OTE(B:0/1);",
+  "[XIC(I:1/3),XIC(B:0/1)]OTE(O:2/1);",
+  "XIO(I:1/1)XIO(I:1/2)XIO(I:1/3)OTE(O:2/2);"
+ ],
+ "llt_exact": true
+}

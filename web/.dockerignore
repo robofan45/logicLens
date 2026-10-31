@@ -1,0 +1,11 @@
+*
+!package.json
+!package-lock.json
+!.npmrc
+!index.html
+!tsconfig.json
+!vite.config.ts
+!postcss.config.mjs
+!public/
+!src/
+!nginx/

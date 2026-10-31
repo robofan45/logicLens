@@ -1,0 +1,258 @@
+{
+  "session_id": "7ded6e2d1ed0493196b44ace8b6239ca",
+  "plc_platform": "generic",
+  "system_overview": "This PLC ladder logic system automates a bottle filling process. It controls a conveyor belt to bring empty bottles to a filling station, detects bottle presence, stops the conveyor, and then opens a filling valve for a set duration. After filling, the valve closes, and the conveyor restarts to move the filled bottle, repeating the cycle automatically. Safety interlocks for E-stop, tank level, and bottle detection are integrated.",
+  "components": {
+    "sensors": [
+      "Start Pushbutton",
+      "Stop Pushbutton",
+      "Emergency Stop Pushbutton",
+      "Bottle Detect Photoelectric Sensor",
+      "Tank Level Low Sensor"
+    ],
+    "actuators": [
+      "Conveyor Motor",
+      "Filling Valve",
+      "Low Level Warning Lamp"
+    ],
+    "timers": [
+      "Filling Timer",
+      "Conveyor Start Delay Timer"
+    ],
+    "counters": [],
+    "internals": [
+      "System Run Latch",
+      "Bottle In Position Latch"
+    ]
+  },
+  "rung_descriptions": [
+    "rung 0: This rung controls the overall system operation. The 'Start_PB' initiates the system, which is latched by 'SRL'. The 'Stop_PB' and 'EStop_PB' de-energize 'SRL', stopping the system.",
+    "rung 1: This rung activates the 'LowLevel_WARN' lamp if the 'TankLevelLow_SNS' detects a low liquid level in the tank. The E-stop ensures this warning can still function even if the main system is stopped.",
+    "rung 2: This rung detects a bottle at the filling station. When 'BottleDetect_SNS' is active and the system is running ('SRL'), it sets the 'BIPL' latch, indicating a bottle is in position and stopping the conveyor.",
+    "rung 3: This rung controls the 'FillValve_OUT'. The valve opens only if the system is running ('SRL'), a bottle is in position ('BIPL'), and the tank level is not low ('TankLevelLow_SNS' NC contact). It also prevents opening if the filling timer has already completed its cycle (indicating a potential stuck state or unreset cycle).",
+    "rung 4: This rung initiates the 'FillTimer_T' (TON) for 3 seconds whenever the 'FillValve_OUT' is active, timing the bottle filling duration.",
+    "rung 5: This rung starts the 'ConveyorStartDelay_T' (TON) for 0.5 seconds once the 'FillTimer_T' has completed ('FillTimer_T.DN'). This delay ensures the filling valve has fully closed before the conveyor moves.",
+    "rung 6: This rung resets the 'BIPL' latch once the 'ConveyorStartDelay_T' has completed ('ConveyorStartDelay_T.DN'). Resetting 'BIPL' allows the conveyor to restart and move the filled bottle, preparing for the next bottle detection.",
+    "rung 7: This rung controls the 'ConveyorMotor_OUT'. The conveyor runs when the system is active ('SRL'), no bottle is detected at the filling station (NOT 'BIPL'), and the filling valve is closed (NOT 'FillValve_OUT')."
+  ],
+  "parsed_elements": [
+    {
+      "element_id": "estop_nc_0_0",
+      "element_type": "NC_contact",
+      "label": "EStop_PB",
+      "rung_number": 0,
+      "position_in_rung": 0,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "start_pb_no_0_1",
+      "element_type": "NO_contact",
+      "label": "Start_PB",
+      "rung_number": 0,
+      "position_in_rung": 1,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "stop_pb_nc_0_2",
+      "element_type": "NC_contact",
+      "label": "Stop_PB",
+      "rung_number": 0,
+      "position_in_rung": 2,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "srl_no_0_3",
+      "element_type": "NO_contact",
+      "label": "SRL",
+      "rung_number": 0,
+      "position_in_rung": 3,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "srl_coil_0_4",
+      "element_type": "coil",
+      "label": "SRL",
+      "rung_number": 0,
+      "position_in_rung": 4,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "estop_nc_1_0",
+      "element_type": "NC_contact",
+      "label": "EStop_PB",
+      "rung_number": 1,
+      "position_in_rung": 0,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "tank_low_sns_no_1_1",
+      "element_type": "NO_contact",
+      "label": "TankLevelLow_SNS",
+      "rung_number": 1,
+      "position_in_rung": 1,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "low_level_warn_coil_1_2",
+      "element_type": "coil",
+      "label": "LowLevel_WARN",
+      "rung_number": 1,
+      "position_in_rung": 2,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "estop_nc_2_0",
+      "element_type": "NC_contact",
+      "label": "EStop_PB",
+      "rung_number": 2,
+      "position_in_rung": 0,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "srl_no_2_1",
+      "element_type": "NO_contact",
+      "label": "SRL",
+      "rung_number": 2,
+      "position_in_rung": 1,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "bottle_detect_sns_no_2_2",
+      "element_type": "NO_contact",
+      "label": "BottleDetect_SNS",
+      "rung_number": 2,
+      "position_in_rung": 2,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "bipl_set_2_3",
+      "element_type": "set_coil",
+      "label": "BIPL",
+      "rung_number": 2,
+      "position_in_rung": 3,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "estop_nc_3_0",
+      "element_type": "NC_contact",
+      "label": "EStop_PB",
+      "rung_number": 3,
+      "position_in_rung": 0,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "srl_no_3_1",
+      "element_type": "NO_contact",
+      "label": "SRL",
+      "rung_number": 3,
+      "position_in_rung": 1,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "bipl_no_3_2",
+      "element_type": "NO_contact",
+      "label": "BIPL",
+      "rung_number": 3,
+      "position_in_rung": 2,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "tank_low_sns_nc_3_3",
+      "element_type": "NC_contact",
+      "label": "TankLevelLow_SNS",
+      "rung_number": 3,
+      "position_in_rung": 3,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "fill_timer_dn_nc_3_4",
+      "element_type": "NC_contact",
+      "label": "FillTimer_T.DN",
+      "rung_number": 3,
+      "position_in_rung": 4,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "fill_valve_coil_3_5",
+      "element_type": "coil",
+      "label": "FillValve_OUT",
+      "rung_number": 3,
+      "position_in_rung": 5,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "estop_nc_4_0",
+      "element_type": "NC_contact",
+      "label": "EStop_PB",
+      "rung_number": 4,
+      "position_in_rung": 0,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "fill_valve_no_4_1",
+      "element_type": "NO_contact",
+      "label": "FillValve_OUT",
+      "rung_number": 4,
+      "position_in_rung": 1,
+      "bounding_box": null,
+      "properties": null,
+      "uncertainties": []
+    },
+    {
+      "element_id": "fill_timer_ton_4_2",
+      "element_type": "timer_TON",
+      "label": "FillTimer_T",
+      "rung_number": 4,
+      "position_in_rung": 2,
+      "bounding_box": null,
+      "properties": {
+        "preset": 3000,
+        "type": "TON"
+      },
+      "uncertainties": []
+    }
+  ],
+  "total_rungs": 1,
+  "suggestions": [],
+  "fault_scenarios": null,
+  "uncertainties": [],
+  "timestamp": "2026-03-25T21:28:55.090568Z"
+}
