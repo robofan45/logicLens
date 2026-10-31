@@ -16,9 +16,9 @@ exports IEC 61131-3 Structured Text and simulates the scan.
 ![YOLOv8](https://img.shields.io/badge/detector-YOLOv8n-111F68)
 ![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue)
 
-[Quick start](#quick-start) · [How it works](#how-it-works) · [Architecture](#architecture) · [Results](#measured-results) · [Testing](#how-its-tested)
+[App tour](#app-tour) · [Quick start](#quick-start) · [How it works](#how-it-works) · [Architecture](#architecture) · [Results](#measured-results) · [Testing](#how-its-tested)
 
-<img src="docs/images/hero-diagram.png" alt="LogicLens analyzer: ladder text on the left, the program redrawn as a ladder diagram on the right with the faulty instructions outlined" width="100%">
+<img src="docs/images/hero.png" alt="LogicLens analyzer: a ladder program on the left; risk score 85 of 100, program statistics and the review checklist on the right" width="100%">
 
 </div>
 
@@ -40,40 +40,210 @@ LogicLens automates that first review:
 - **Simulates the scan** with normally-open (NO) and normally-closed (NC) field wiring, so you can watch power flow rung by rung.
 - **Runs in your browser** and works offline. Images are processed in memory and never stored. Claude explanations are optional.
 
-## Screenshots
+## App tour
 
-<table>
-<tr>
-<td width="50%"><img src="docs/images/findings.png" alt="Findings list with severity, rule, rung, explanation and fix"><br><sub><b>Findings</b>: severity, rule, rungs, why it matters and how to fix it</sub></td>
-<td width="50%"><img src="docs/images/overview.png" alt="Overview with risk score 85 of 100, program statistics and the review checklist"><br><sub><b>Overview</b>: risk score, program statistics and the 19-item checklist</sub></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/images/structured-text.png" alt="Generated IEC 61131-3 Structured Text"><br><sub><b>Structured Text</b>: IEC 61131-3 with the same scan semantics as the ladder</sub></td>
-<td width="50%"><img src="docs/images/simulator.png" alt="Simulator with the motor running and power flow shown in green"><br><sub><b>Simulator</b>: press Start, release it, and the seal-in keeps the motor running</sub></td>
-</tr>
-</table>
+Real screenshots of LogicLens running, with a pink number on each part of the screen. The table
+under each screenshot explains every number. Click a screenshot to see it full size.
 
-### From a screenshot to an analysis
+[1 Home](#1-home-page) · [2 Analyzer](#2-analyzer-paste-a-program-and-analyse) · [3 Findings](#3-findings) ·
+[4 Diagram](#4-ladder-diagram) · [5 Signal trace](#5-signal-trace) · [6 Corrections](#6-corrections) ·
+[7 Structured Text](#7-structured-text) · [8 Simulator](#8-simulator) ·
+[9 Recognise a screenshot](#9-screenshot-recognition-step-1-recognise) ·
+[10 Analyse it](#10-screenshot-recognition-step-2-analyse) · [11 History](#11-history)
 
-<table>
-<tr>
-<td width="40%"><img src="docs/images/recognition.png" alt="A real RSLogix 500 screenshot with every detected instruction boxed and labelled"></td>
-<td width="60%"><img src="docs/images/recognition-diagram.png" alt="The recognised program redrawn as a ladder diagram"></td>
-</tr>
-<tr>
-<td><sub>1. A real RSLogix 500 screenshot: every symbol detected, every operand read</sub></td>
-<td><sub>2. The recognised program, redrawn and analysed</sub></td>
-</tr>
-</table>
+### 1. Home page
 
-```text
-0000: XIC(I:1/1)XIC(I:1/2)OTE(B:0/1);
-0001: [XIC(I:1/3),XIC(B:0/1)]OTE(O:2/1);
-0002: XIO(I:1/1)XIO(I:1/2)XIO(I:1/3)OTE(O:2/2);
-```
+The landing page. One click loads a faulty demo program and analyses it.
 
-The recognised text above matches the hand-written ground truth exactly
-([`ml/reports/sample_prediction.json`](ml/reports/sample_prediction.json)).
+![LogicLens home page with numbered callouts](docs/images/tour-01-home.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | Logo and version | LogicLens, version 2. Shown on every page. |
+| 2 | Main menu | **Home**; **Analyzer**, the workbench; **History**, past analyses kept in your browser; **Docs**, the ladder text format and the list of checks. |
+| 3 | Headline and summary | What LogicLens does: reads ladder logic from a screenshot or text, checks it against 32 rules and heuristics, traces every output, proposes corrections, exports Structured Text and simulates the scan. |
+| 4 | Start buttons | **Try it on a faulty program** opens the Analyzer with a demo full of common field mistakes. **Analyse your own** opens it empty. |
+| 5 | Example input | The input format: rungs copied straight from Studio 5000 or RSLogix. The second rung writes `Motor_Run` again, the double-coil mistake LogicLens catches. |
+| 6 | Feature cards | The main features at a glance: screenshot or text in, 32 checks, signal trace, corrections. |
+| 7 | Server status | Green means the recognition server is reachable. "vision on" means screenshot recognition is ready. "AI off" means no Claude key is configured. Text analysis works even without a server. |
+
+### 2. Analyzer: paste a program and analyse
+
+The demo program after **Analyse**. Input is on the left and results are on the right. This is the
+**Overview** tab.
+
+![LogicLens analyzer showing the overview of an analysed program](docs/images/tour-02-analyzer.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | Input type | **Ladder text** to paste a program, **Image** to recognise a screenshot (steps 9 and 10). |
+| 2 | Load an example | Six built-in programs, from this faulty demo to a bottle-filling line. |
+| 3 | Ladder text editor | One rung per line, `//` for comments, `[ , ]` for parallel branches. Syntax mistakes are reported as you type. |
+| 4 | Platform and Analyse | The notation: Rockwell, Siemens, Schneider, Mitsubishi, Omron or generic IEC. **Analyse**, or Ctrl+Enter, runs everything. |
+| 5 | Pipeline | Each stage with its time: recognise image (skipped for text), parse, trace, checks, corrections, Structured Text. The whole analysis takes milliseconds and runs in the browser. |
+| 6 | Result tabs | Overview, Diagram, Signal trace, Findings (10), Corrections, Structured Text, Simulator, AI explain. |
+| 7 | Export | Downloads a Markdown report or the full analysis as JSON. |
+| 8 | Risk score | 0 to 100, combining all findings weighted by severity. Here it is 85, Critical: 1 critical, 2 high and 7 medium findings. |
+| 9 | Program statistics | Rungs, instructions, tags, inputs, outputs, timers, counters and parse errors. |
+| 10 | Advisory note | Rule-based findings are exact for the logic shown. Heuristic ones depend on tag names. A qualified engineer verifies any change. This is not a functional-safety verification. |
+| 11 | Review checklist | The 19-item review checklist. Each item is marked found, not found or not applicable. Some items need safety context that a program alone cannot give. |
+| 12 | Analysis settings | Optional context for the AI, an API key if the server requires one, and a button that checks the server again. |
+| 13 | Server status | As on the home page. |
+
+### 3. Findings
+
+Every problem found, most severe first.
+
+![LogicLens findings list with numbered callouts](docs/images/tour-03-findings.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | Findings tab | The badge counts the findings (10). |
+| 2 | Severity filter | Shows all findings, or only the critical, high, medium or low ones. |
+| 3 | Basis filter | Rules and heuristics, deterministic rules only, or heuristics only. |
+| 4 | Severity and title | **CRITICAL**: MOTOR_OUT is driven by 2 coils. |
+| 5 | Rule details | Rule ID (`DUPLICATE_OUTPUT`), whether it is a deterministic rule or a heuristic, the confidence, and the rungs involved (0 and 4). |
+| 6 | Tags involved | The tag this finding is about. |
+| 7 | Explanation | What is wrong and why it matters. The coil in rung 4 overwrites rung 0 on every scan, so rung 0's logic only shows up as a one-scan glitch. |
+| 8 | How to fix it | The recommended change. |
+| 9 | Standard | The standard behind the check, IEC 61131-3 here. |
+| 10 | Show | Jumps to the flagged instructions in the ladder diagram. |
+| 11 | A heuristic finding | `ESTOP_IN_STANDARD_LOGIC` is a heuristic with 70 % confidence. It relies on the tag name E_STOP, and the finding says so. |
+
+### 4. Ladder diagram
+
+The program redrawn as a ladder diagram, with the findings marked on it.
+
+![LogicLens ladder diagram with flagged instructions](docs/images/tour-04-diagram.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | Legend | A dashed outline marks an instruction named in a finding, and its colour shows the severity. Click any instruction for its details. |
+| 2 | Rung number | Rung 0000, numbered as in the PLC software. |
+| 3 | Rung comment | The `//` comment written above the rung. |
+| 4 | Seal-in branch | START_PB in parallel with MOTOR_OUT keeps the motor running after Start is released. |
+| 5 | Flagged contact (medium) | STOP_PB is examined with XIO (normally-open instruction). If the stop button is wired normally-closed, as stop buttons usually are, the motor can never start. |
+| 6 | Flagged coil (critical) | MOTOR_OUT is written here and again in rung 4: the duplicate coil. |
+| 7 | Timer block | TON DELAY_TMR with preset `?`. The preset was unreadable on the printout, so it is flagged instead of guessed. |
+
+### 5. Signal trace
+
+For every output, the condition that drives it, written as logic.
+
+![LogicLens signal trace showing what drives each output](docs/images/tour-05-signal-trace.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | What drives each output | Each rung's condition, read the way the PLC scans it: series contacts are AND, parallel branches are OR. |
+| 2 | Rung 0 | MOTOR_OUT = (START_PB OR MOTOR_OUT) AND NOT STOP_PB: the start/stop circuit with its seal-in. |
+| 3 | Rung 4 | MOTOR_OUT is driven again, by REMOTE_START alone. This is the second writer behind the duplicate-coil finding. |
+| 4 | Rung 7 | AUTO_MODE AND NOT AUTO_MODE can never be true, so AUTO_LAMP can never light. This is the dead-rung finding. |
+| 5 | Cross-reference | Further down: every tag, with the rungs that read and write it, and a filter. |
+
+### 6. Corrections
+
+Suggested fixes as patches you can review, select and load into the editor.
+
+![LogicLens correction patches with before and after](docs/images/tour-06-corrections.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | Select | Tick the patches you want to apply. |
+| 2 | What the patch does | Merges the two MOTOR_OUT coils into one rung, with their conditions as parallel branches. |
+| 3 | Safe structural change | The fix changes structure only and needs no decision from you, so it starts selected. |
+| 4 | Before | The rungs as they are now. |
+| 5 | After | The rungs after the fix. |
+| 6 | How to verify | Steps to test the change before it reaches a PLC. |
+| 7 | Needs your confirmation | This fix depends on field wiring or intent, so it starts unselected. |
+| 8 | `?` placeholder | The reset condition for HORN is unknown. You fill in the reset or acknowledge signal. |
+
+Below the list, **Load corrected program into the editor** applies the selected patches and analyses
+the result again.
+
+### 7. Structured Text
+
+The same program as IEC 61131-3 Structured Text, ready to paste into a PLC project.
+
+![LogicLens Structured Text export](docs/images/tour-07-structured-text.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | Description | The code behaves like the ladder, scan for scan. The test suite checks this against the simulator on 600 random programs. |
+| 2 | Copy and download | Copies the code, or saves it as a `.st` file. |
+| 3 | Warning | Unread operands (`?`) become FALSE, 0 or T#0ms in the code. Fill them in before using it. |
+| 4 | Header | Program name, date, rung count, an advisory and the same warning, as comments in the code. |
+| 5 | Program name | Taken from the program's name: the example name, or the image file. |
+| 6 | Declarations | Every tag with its inferred type (BOOL, TON, CTU), plus helper variables such as the timer reset request. |
+| 7 | Rung 0 as code | `MOTOR_OUT := (START_PB OR MOTOR_OUT) AND NOT STOP_PB;`, with the rung comment above it. |
+| 8 | Unread preset | The timer preset that could not be read is marked in the code itself. |
+
+### 8. Simulator
+
+The motor-starter example, running. Start was pressed and released, and the seal-in keeps the
+motor on.
+
+![LogicLens scan simulator with power flow in green](docs/images/tour-08-simulator.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | Run controls | **Run** scans continuously, **One scan** steps once, **Reset** clears every value. |
+| 2 | Scan time | How long each simulated scan takes. Timers advance by this much per scan. |
+| 3 | Scan counter | Scans run so far (3). |
+| 4 | A field input | Click the name to press or release it. NO/NC sets how the device is wired. The number is what the PLC reads: Stop_PB is wired NC, so it reads 1 while released. |
+| 5 | Wiring note | Stop, E-stop and overload devices default to NC, so they read 1 when healthy. |
+| 6 | Outputs | Motor_Run and Run_Lamp are ON, OL_Alarm is off. |
+| 7 | Timers and counters | Live accumulated time and counts. This program has none. |
+| 8 | Live ladder | Green shows where power flowed in the last scan, rung by rung. |
+
+### 9. Screenshot recognition, step 1: recognise
+
+A real RSLogix 500 screenshot, dropped into the **Image** tab and recognised.
+
+![LogicLens recognising a ladder diagram screenshot](docs/images/tour-09-recognise.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | Image input | Switches from text to image. |
+| 2 | Drop zone | Drag in a screenshot or photo, or choose a file. PNG, JPEG or WEBP up to 8 MB, processed in memory and never stored. On a phone there is also a **Take photo** button. |
+| 3 | Detected instructions | Every symbol the detector found, boxed and labelled with the instruction and its confidence (XIC 87 %, OTE 89 % and so on). |
+| 4 | Recognise | Sends the image to the recognition server. |
+| 5 | Result summary | 3 rungs recognised by the `yolo-onnx` engine in about 1.5 s, image quality 100/100. |
+| 6 | Recognised ladder text | The rungs as text, including the parallel branch in rung 0001 and every address read by OCR. It matches the hand-written ground truth exactly. |
+| 7 | Review hint | Check the text against the image. `?` marks anything that could not be read. |
+| 8 | Review in editor and analyse | Copies the text into the editor and runs the analysis (step 10). |
+| 9 | Results area | Stays empty until you have reviewed the recognised text. |
+| 10 | Server status | "vision on": the recognition engine is ready. |
+
+### 10. Screenshot recognition, step 2: analyse
+
+The recognised program, analysed like any other.
+
+![LogicLens analysis of the recognised screenshot](docs/images/tour-10-recognised.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | Editor | The recognised rungs with their rung numbers. Edit anything and analyse again. |
+| 2 | Pipeline | The first stage now ran: Recognise image, yolo-onnx, 3 rungs, 1.51 s. |
+| 3 | Program name | Named after the image file. |
+| 4 | Redrawn diagram | The screenshot's program drawn as a clean ladder: two contacts in series, a parallel branch, three NC contacts. |
+| 5 | Findings | 1 low finding: none of the 3 rungs has a comment. |
+
+### 11. History
+
+Every analysis is kept in your browser so you can come back to it.
+
+![LogicLens history of past analyses](docs/images/tour-11-history.png)
+
+| # | What you see | What it means |
+|---|---|---|
+| 1 | History | The last analyses (up to 50), stored only in this browser. Images are never kept. |
+| 2 | Export and Clear all | Downloads the history as JSON, or deletes it. |
+| 3 | From an image | Named after the screenshot it came from. |
+| 4 | Details | Source (image or text), date and time, platform and number of rungs. |
+| 5 | Top findings | The most important findings at a glance. |
+| 6 | Risk score | Score, grade and findings per severity: 1 critical, 2 high, 7 medium. |
+| 7 | Delete | Removes this entry. |
+| 8 | Reopen | Click a name to open that analysis in the Analyzer again. |
 
 ## Quick start
 
