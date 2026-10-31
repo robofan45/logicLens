@@ -79,14 +79,15 @@ export function Analyzer() {
   const liveErrors = useMemo(() => parseProgram(debounced).errors, [debounced]);
 
   const run = useCallback(
-    (programText: string, src: "text" | "image", plat: PlatformId) => {
+    // programName: pass it when the name changes in the same event (state updates land after this call)
+    (programText: string, src: "text" | "image", plat: PlatformId, programName: string = name) => {
       setRunning(true);
       // let the spinner paint before the (synchronous, usually < 50 ms) analysis
       setTimeout(() => {
         const a = analyzeProgram(programText, {
           platform: plat,
           context,
-          programName: name,
+          programName,
           generatedAt: new Date().toISOString().slice(0, 10),
           now: () => performance.now(),
         });
@@ -99,7 +100,7 @@ export function Analyzer() {
         if (a.parse.rungs.length) {
           const ok = saveToHistory({
             id: newId(),
-            name: name.trim() || "Untitled analysis",
+            name: programName.trim() || "Untitled analysis",
             createdAt: at,
             platform: plat,
             source: src,
@@ -122,14 +123,16 @@ export function Analyzer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onRecognized = (programText: string, res: ProgramResponse) => {
+  const onRecognized = (programText: string, res: ProgramResponse, fileName?: string) => {
     const plat = res.platform !== "unknown" ? res.platform : platform;
     setText(programText);
+    const imageName = fileName ? `Image: ${fileName.slice(0, 80)}` : "Recognised image";
+    setName(imageName);
     setSource("image");
     setRecognition(res);
     setPlatform(plat);
     setMode("text");
-    run(programText, "image", plat);
+    run(programText, "image", plat, imageName);
   };
 
   const loadSample = (id: string) => {

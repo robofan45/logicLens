@@ -23,7 +23,8 @@ export function programTextFromResponse(res: ProgramResponse): string {
 
 interface Props {
   platform: PlatformId;
-  onRecognized: (text: string, res: ProgramResponse) => void;
+  /** fileName names the analysis (results header, ST program, history); it never leaves the browser. */
+  onRecognized: (text: string, res: ProgramResponse, fileName?: string) => void;
 }
 
 export function ImagePanel({ platform, onRecognized }: Props) {
@@ -189,7 +190,7 @@ export function ImagePanel({ platform, onRecognized }: Props) {
           </p>
           <button
             type="button"
-            onClick={() => onRecognized(programTextFromResponse(result), result)}
+            onClick={() => onRecognized(programTextFromResponse(result), result, file?.name)}
             className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-cyan-500/40 text-cyan-300 hover:bg-slate-700"
             style={{ fontSize: "0.82rem", fontWeight: 500 }}
           >

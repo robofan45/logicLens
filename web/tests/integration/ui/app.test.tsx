@@ -4,6 +4,7 @@ import { act, cleanup, fireEvent, screen, waitFor, within } from "@testing-libra
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { HEALTH, META, mockFetch, offline, renderAt, setupDom } from "../../helpers/ui";
+import { loadHistory } from "../../../src/app/lib/history";
 
 const SAMPLE_PARSE = {
   schema_version: "1.0",
@@ -151,6 +152,13 @@ describe("image recognition", () => {
     await userEvent.click(screen.getByRole("button", { name: /Review in editor and analyse/ }));
     await analysed();
     expect((editor()).value).toContain("0001: [XIC(I:1/3),XIC(B:0/1)]OTE(O:2/1);");
+    // The results, the ST program name and the history entry are named after the image,
+    // not after the example that was in the editor before.
+    expect(screen.getByText(/· Image: plc\.png/)).toBeTruthy();
+    expect(screen.queryByText(/· Demo: motor/)).toBeNull();
+    await waitFor(() => expect(loadHistory()[0]?.name).toBe("Image: plc.png"));
+    await userEvent.click(screen.getByRole("tab", { name: /^Structured Text/ }));
+    expect(await screen.findByText(/PROGRAM Image_plc_png/)).toBeTruthy();
   });
 
   it("warns loudly when the server runs the stub engine", async () => {
