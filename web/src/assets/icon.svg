@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="LogicLens">
+  <rect width="64" height="64" rx="14" fill="#06b6d4"/>
+  <g fill="none" stroke="#020617" stroke-width="4" stroke-linecap="round">
+    <line x1="12" y1="12" x2="12" y2="52"/>
+    <line x1="52" y1="12" x2="52" y2="52"/>
+    <line x1="12" y1="24" x2="22" y2="24"/>
+    <line x1="22" y1="16" x2="22" y2="32"/>
+    <line x1="30" y1="16" x2="30" y2="32"/>
+    <line x1="30" y1="24" x2="52" y2="24"/>
+    <line x1="12" y1="42" x2="34" y2="42"/>
+    <path d="M38 35 q-5 7 0 14"/>
+    <path d="M46 35 q5 7 0 14"/>
+    <line x1="49" y1="42" x2="52" y2="42"/>
+  </g>
+</svg>

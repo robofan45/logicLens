@@ -1,0 +1,15 @@
+# dependencies and build output
+node_modules/
+web/dist/
+web/coverage/
+# generated data and training runs (regenerate with ml/generator/generate.py)
+ml/data/
+ml/runs/
+# python caches
+__pycache__/
+.pytest_cache/
+.coverage
+*.pyc
+.venv/
+# secrets
+.env

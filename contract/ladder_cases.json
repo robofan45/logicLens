@@ -1,0 +1,612 @@
+{
+  "version": "1.0",
+  "note": "Shared parser test vectors. Both web/src/engine/parse.ts and contract/python/logiclens_ladder.py must pass every case. Fields other than name/text/ok are optional checks.",
+  "cases": [
+    {
+      "name": "simple series",
+      "text": "XIC(A)XIO(B)OTE(C);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "XIO",
+          "OTE"
+        ]
+      ],
+      "canonical": "XIC(A)XIO(B)OTE(C);",
+      "numbers": [
+        0
+      ]
+    },
+    {
+      "name": "seal-in branch",
+      "text": "XIC(Start_PB)[XIC(Motor_Run),XIC(Remote_Start)]XIO(Stop_PB)OTE(Motor_Run);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "XIC",
+          "XIC",
+          "XIO",
+          "OTE"
+        ]
+      ],
+      "canonical": "XIC(Start_PB)[XIC(Motor_Run),XIC(Remote_Start)]XIO(Stop_PB)OTE(Motor_Run);"
+    },
+    {
+      "name": "whitespace, lower case, no semicolon",
+      "text": "  xic( A )  xio(B)\tote(C)  ",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "XIO",
+          "OTE"
+        ]
+      ],
+      "canonical": "XIC(A)XIO(B)OTE(C);"
+    },
+    {
+      "name": "IEC aliases",
+      "text": "NO(A)NC(B)COIL(C);\nno(D)set(L);\nNO(E)R(L);\nNO(F)OUT(G);\nNO(H)S(L);\nNO(I)RESET(L);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "XIO",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTL"
+        ],
+        [
+          "XIC",
+          "OTU"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTL"
+        ],
+        [
+          "XIC",
+          "OTU"
+        ]
+      ],
+      "canonical": "XIC(A)XIO(B)OTE(C);\nXIC(D)OTL(L);\nXIC(E)OTU(L);\nXIC(F)OTE(G);\nXIC(H)OTL(L);\nXIC(I)OTU(L);"
+    },
+    {
+      "name": "numeric labels set rung numbers",
+      "text": "0000: XIC(I:1/1)XIC(I:1/2)OTE(B:0/1);\n0001: [XIC(I:1/3),XIC(B:0/1)]OTE(O:2/1);\n0002: XIO(I:1/1)XIO(I:1/2)XIO(I:1/3)OTE(O:2/2);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIO",
+          "XIO",
+          "XIO",
+          "OTE"
+        ]
+      ],
+      "numbers": [
+        0,
+        1,
+        2
+      ],
+      "canonical": "XIC(I:1/1)XIC(I:1/2)OTE(B:0/1);\n[XIC(I:1/3),XIC(B:0/1)]OTE(O:2/1);\nXIO(I:1/1)XIO(I:1/2)XIO(I:1/3)OTE(O:2/2);"
+    },
+    {
+      "name": "word labels and continued numbering",
+      "text": "Rung 5: XIC(A)OTE(B);\nXIC(C)OTE(D);\nRUNG 9. XIC(E)OTE(F);\nNetwork 2) XIC(G)OTE(H);\nN 7: XIC(I)OTE(J);",
+      "ok": true,
+      "numbers": [
+        5,
+        6,
+        9,
+        2,
+        7
+      ],
+      "rungs": [
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ]
+      ]
+    },
+    {
+      "name": "L5K bare N: label",
+      "text": "N: XIC(A)OTE(B);\nN: XIC(C)OTE(D);",
+      "ok": true,
+      "numbers": [
+        0,
+        1
+      ],
+      "canonical": "XIC(A)OTE(B);\nXIC(C)OTE(D);"
+    },
+    {
+      "name": "comment lines attach to next rung",
+      "text": "// Motor start/stop\n# seal-in\n\nXIC(Start)[XIC(Motor),]XIO(Stop)OTE(Motor);\nXIC(Motor)OTE(Lamp);",
+      "ok": true,
+      "comments": [
+        "Motor start/stop\nseal-in",
+        null
+      ],
+      "canonical": "// Motor start/stop\n// seal-in\nXIC(Start)[XIC(Motor),]XIO(Stop)OTE(Motor);\nXIC(Motor)OTE(Lamp);"
+    },
+    {
+      "name": "inline comment attaches to last rung on the line",
+      "text": "// pending\nXIC(A)OTE(B);XIC(C)OTE(D); // run lamp",
+      "ok": true,
+      "comments": [
+        "pending",
+        "run lamp"
+      ],
+      "rungs": [
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ]
+      ]
+    },
+    {
+      "name": "several rungs on one line and stray semicolons",
+      "text": "XIC(A)OTE(B);;XIC(C)OTE(D);  ;",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ]
+      ],
+      "numbers": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "parallel outputs and mid-rung output",
+      "text": "XIC(A)[OTE(B),OTE(C)];\nXIC(A)OTE(B)XIC(C)OTE(D);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "OTE",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE",
+          "XIC",
+          "OTE"
+        ]
+      ],
+      "canonical": "XIC(A)[OTE(B),OTE(C)];\nXIC(A)OTE(B)XIC(C)OTE(D);"
+    },
+    {
+      "name": "nested branches",
+      "text": "[XIC(A)[XIC(B),XIC(C)],XIC(D)]OTE(E);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "XIC",
+          "XIC",
+          "XIC",
+          "OTE"
+        ]
+      ],
+      "canonical": "[XIC(A)[XIC(B),XIC(C)],XIC(D)]OTE(E);"
+    },
+    {
+      "name": "empty legs are wires",
+      "text": "[XIC(A),]OTE(B);\n[]OTE(C);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "OTE"
+        ]
+      ],
+      "canonical": "[XIC(A),]OTE(B);\n[]OTE(C);"
+    },
+    {
+      "name": "timer forms: Logix, SLC, IEC",
+      "text": "XIC(A)TON(T1,5000,0);\nXIC(I:1/0)TON(T4:0,0.01,500,0);\nNO(B)TON(T2,T#5s);\nNO(C)TOF(T3,T#1m30s);\nNO(D)RTO(T5,TIME#250ms,0);\nNO(E)TP(T6,t#1.5s);\nNO(F)TON(T7,Preset_Tag,0);",
+      "ok": true,
+      "timer_preset_ms": [
+        5000,
+        5000,
+        5000,
+        90000,
+        250,
+        1500,
+        null
+      ]
+    },
+    {
+      "name": "done bits, compares, math and moves",
+      "text": "XIC(T1.DN)OTE(Lamp);\nGRT(Level,80)LES(Level,95.5)ADD(Count,1,Count)MOV(0,Total);\nLIM(10,Temp,20)SUB(A,B,C)MUL(C,2,D)DIV(D,4,E);\nEQU(Mode,16#FF)NEQ(Step,2#101)AND(W1,W2,W3)OR(W1,W2,W4)XOR(W1,W2,W5)NOT(W1,W6);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "GRT",
+          "LES",
+          "ADD",
+          "MOV"
+        ],
+        [
+          "LIM",
+          "SUB",
+          "MUL",
+          "DIV"
+        ],
+        [
+          "EQU",
+          "NEQ",
+          "AND",
+          "OR",
+          "XOR",
+          "NOT"
+        ]
+      ],
+      "operand_types": [
+        "tag",
+        "tag",
+        "tag",
+        "number",
+        "tag",
+        "number",
+        "tag",
+        "number",
+        "tag",
+        "number",
+        "tag",
+        "number",
+        "tag",
+        "number",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "number",
+        "tag",
+        "tag",
+        "number",
+        "tag",
+        "tag",
+        "number",
+        "tag",
+        "number",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag"
+      ]
+    },
+    {
+      "name": "counters, resets, one-shots, edges",
+      "text": "XIC(PE)ONS(PE_OS)CTU(C1,10,0);\nXIC(Reset)RES(C1);\nXIC(A)OSR(A_SB,A_Pulse);\nXIC(A)OSF(A_SB2,A_Fall);\nP(Sensor)CTD(C2,5);\nN(Sensor)CTUD(C3,20,Down_PE);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "ONS",
+          "CTU"
+        ],
+        [
+          "XIC",
+          "RES"
+        ],
+        [
+          "XIC",
+          "OSR"
+        ],
+        [
+          "XIC",
+          "OSF"
+        ],
+        [
+          "P",
+          "CTD"
+        ],
+        [
+          "N",
+          "CTUD"
+        ]
+      ]
+    },
+    {
+      "name": "Siemens, Logix and quoted tags",
+      "text": "XIC(%I0.0)XIO(%I0.1)OTE(%Q0.0);\nXIC(Local:1:I.Data.0)OTE(Local:2:O.Data.3);\nXIC(Bits[3])OTE(Out[0].5);\nXIC(\"Motor Start\")OTE(#Run);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "XIO",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ]
+      ],
+      "canonical": "XIC(%I0.0)XIO(%I0.1)OTE(%Q0.0);\nXIC(Local:1:I.Data.0)OTE(Local:2:O.Data.3);\nXIC(Bits[3])OTE(Out[0].5);\nXIC(\"Motor Start\")OTE(#Run);"
+    },
+    {
+      "name": "unknown operand marker",
+      "text": "XIC(?)OTE(B);",
+      "ok": true,
+      "operand_types": [
+        "unknown",
+        "tag"
+      ]
+    },
+    {
+      "name": "program control",
+      "text": "XIC(Skip)JMP(L1);\nXIC(A)OTE(B);\nLBL(L1)XIC(C)OTE(D);\nXIC(Zone)MCR();\nXIC(E)OTE(F);\nMCR();\nXIC(G)JSR(Sub1,2,P1,P2);\nAFI()OTE(Never);\nNOP();\nEND();",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "JMP"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "LBL",
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "MCR"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "MCR"
+        ],
+        [
+          "XIC",
+          "JSR"
+        ],
+        [
+          "AFI",
+          "OTE"
+        ],
+        [
+          "NOP"
+        ],
+        [
+          "END"
+        ]
+      ]
+    },
+    {
+      "name": "error: unknown mnemonic, other rungs survive and keep numbering",
+      "text": "XIC(A)OTE(B);\nFOO(X)OTE(Y);\nXIC(C)OTE(D);",
+      "ok": false,
+      "errors": [
+        "E_UNKNOWN_MNEMONIC"
+      ],
+      "error_lines": [
+        2
+      ],
+      "rungs": [
+        [
+          "XIC",
+          "OTE"
+        ],
+        [
+          "XIC",
+          "OTE"
+        ]
+      ],
+      "numbers": [
+        0,
+        2
+      ]
+    },
+    {
+      "name": "error: wrong arity",
+      "text": "XIC(A,B)OTE(C);",
+      "ok": false,
+      "errors": [
+        "E_ARITY"
+      ]
+    },
+    {
+      "name": "error: unclosed branch",
+      "text": "[XIC(A),XIC(B)OTE(C);",
+      "ok": false,
+      "errors": [
+        "E_UNBALANCED"
+      ]
+    },
+    {
+      "name": "error: unclosed parenthesis",
+      "text": "XIC(A OTE(B);",
+      "ok": false,
+      "errors": [
+        "E_UNBALANCED"
+      ]
+    },
+    {
+      "name": "error: stray closing bracket",
+      "text": "XIC(A)]OTE(B);",
+      "ok": false,
+      "errors": [
+        "E_UNBALANCED"
+      ]
+    },
+    {
+      "name": "error: stray closing parenthesis",
+      "text": "XIC(A))OTE(B);",
+      "ok": false,
+      "errors": [
+        "E_UNBALANCED"
+      ]
+    },
+    {
+      "name": "error: empty operand",
+      "text": "XIC(A)TON(T1,,0);",
+      "ok": false,
+      "errors": [
+        "E_EMPTY_OPERAND"
+      ]
+    },
+    {
+      "name": "error: labelled empty rung",
+      "text": "0001: ;",
+      "ok": false,
+      "errors": [
+        "E_EMPTY_RUNG"
+      ]
+    },
+    {
+      "name": "error: rung made only of wires",
+      "text": "[,]",
+      "ok": false,
+      "errors": [
+        "E_EMPTY_RUNG"
+      ]
+    },
+    {
+      "name": "error: mnemonic without parentheses",
+      "text": "XIC A OTE(B);",
+      "ok": false,
+      "errors": [
+        "E_SYNTAX"
+      ]
+    },
+    {
+      "name": "error: comma outside a branch",
+      "text": "XIC(A),OTE(B);",
+      "ok": false,
+      "errors": [
+        "E_SYNTAX"
+      ]
+    },
+    {
+      "name": "error: invalid operand characters",
+      "text": "XIC(Start PB)OTE(B);\nXIC(A;B)OTE(C);",
+      "ok": false,
+      "errors": [
+        "E_SYNTAX",
+        "E_SYNTAX"
+      ]
+    },
+    {
+      "name": "error: operand too long",
+      "text": "XIC(AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)OTE(B);",
+      "ok": false,
+      "errors": [
+        "E_LIMIT"
+      ]
+    },
+    {
+      "name": "error: nesting deeper than 16",
+      "text": "[[[[[[[[[[[[[[[[[XIC(A)]]]]]]]]]]]]]]]]]OTE(B);",
+      "ok": false,
+      "errors": [
+        "E_LIMIT"
+      ]
+    },
+    {
+      "name": "nesting of exactly 16 is fine",
+      "text": "[[[[[[[[[[[[[[[[XIC(A)]]]]]]]]]]]]]]]]OTE(B);",
+      "ok": true,
+      "rungs": [
+        [
+          "XIC",
+          "OTE"
+        ]
+      ]
+    },
+    {
+      "name": "error: too many operands",
+      "text": "JSR(S,1,2,3,4,5,6,7,8);",
+      "ok": false,
+      "errors": [
+        "E_LIMIT"
+      ]
+    },
+    {
+      "name": "error: bad time literal is an invalid operand",
+      "text": "XIC(A)TON(T1,T#5x);",
+      "ok": false,
+      "errors": [
+        "E_SYNTAX"
+      ]
+    },
+    {
+      "name": "empty program",
+      "text": "\n\n// only a comment\n",
+      "ok": true,
+      "rungs": []
+    }
+  ]
+}

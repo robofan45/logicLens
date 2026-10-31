@@ -1,0 +1,70 @@
+{
+ "generator": {
+  "plans": 4000,
+  "plan_seconds": 43.7,
+  "rungs": 16674,
+  "renders": 200,
+  "render_p50_s": 0.106,
+  "render_p95_s": 0.211,
+  "errors": [],
+  "n_errors": 0,
+  "peak_rss_mb": 417.1
+ },
+ "inference": {
+  "inferences": 1000,
+  "crashes": [],
+  "bad_boxes": [],
+  "n_bad_boxes": 0,
+  "p50_ms": 145.9,
+  "p95_ms": 173.1,
+  "max_ms": 257.7,
+  "current_rss_change_mb": 103.5,
+  "peak_rss_mb": 549.7
+ },
+ "leak_check": {
+  "inferences": 600,
+  "rss_mb_every_100": [
+   552.0,
+   552.0,
+   552.0,
+   552.0,
+   552.0,
+   552.0
+  ],
+  "drift_after_warmup_mb": 0.0
+ },
+ "concurrency": {
+  "steps": [
+   {
+    "users": 1,
+    "requests": 137,
+    "throughput_rps": 6.83,
+    "p50_ms": 142.7,
+    "p95_ms": 175.9
+   },
+   {
+    "users": 2,
+    "requests": 271,
+    "throughput_rps": 13.46,
+    "p50_ms": 144.2,
+    "p95_ms": 177.4
+   },
+   {
+    "users": 4,
+    "requests": 253,
+    "throughput_rps": 12.53,
+    "p50_ms": 312.9,
+    "p95_ms": 371.2
+   },
+   {
+    "users": 8,
+    "requests": 255,
+    "throughput_rps": 12.52,
+    "p50_ms": 635.2,
+    "p95_ms": 694.2
+   }
+  ],
+  "saturates_at_users": 2,
+  "max_throughput_rps": 13.46
+ }
+}

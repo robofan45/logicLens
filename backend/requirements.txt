@@ -1,0 +1,15 @@
+# Runtime dependencies, pinned. Wheels exist for CPython 3.12 (python:3.12-slim) and 3.13.
+# Install: pip install -r requirements.txt   |   audit: pip-audit -r requirements.txt
+fastapi==0.162.0
+starlette==1.7.0            # pinned explicitly: request/multipart handling is security relevant
+uvicorn[standard]==0.54.0
+pydantic==2.13.5
+pydantic-settings==2.16.2
+python-multipart==0.0.32    # streaming multipart parser (uploads never spool to disk)
+anthropic==2.3.0
+redis==8.1.0
+onnxruntime==1.29.0
+numpy==2.5.3
+pillow==13.0.0              # >= 13.0.0: 15 CVEs fixed vs 12.3.0 (pip-audit, Oct 2026)
+# OCR uses the tesseract binary (apt: tesseract-ocr) over stdin/stdout, not pytesseract:
+# pytesseract writes every crop to a temporary file, which would break zero retention.

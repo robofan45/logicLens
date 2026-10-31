@@ -1,0 +1,216 @@
+{
+ "split": "test",
+ "elapsed_s": 255.1,
+ "request_failures": 0,
+ "overall": {
+  "images": 150,
+  "program_exact": 0.02,
+  "rung_exact": 0.1303,
+  "mnemonic_precision": 0.7833,
+  "mnemonic_recall": 0.8157,
+  "mnemonic_f1": 0.7992,
+  "operand_acc": 0.4244,
+  "unknown_rate": 0.3888
+ },
+ "by_style": {
+  "dark": {
+   "images": 21,
+   "program_exact": 0.0476,
+   "rung_exact": 0.1413,
+   "mnemonic_precision": 0.7214,
+   "mnemonic_recall": 0.7769,
+   "mnemonic_f1": 0.7481,
+   "operand_acc": 0.4803,
+   "unknown_rate": 0.3714
+  },
+  "iec": {
+   "images": 19,
+   "program_exact": 0.0526,
+   "rung_exact": 0.1316,
+   "mnemonic_precision": 0.7895,
+   "mnemonic_recall": 0.8434,
+   "mnemonic_f1": 0.8155,
+   "operand_acc": 0.5113,
+   "unknown_rate": 0.4249
+  },
+  "printed": {
+   "images": 17,
+   "program_exact": 0.0,
+   "rung_exact": 0.1324,
+   "mnemonic_precision": 0.7917,
+   "mnemonic_recall": 0.8172,
+   "mnemonic_f1": 0.8042,
+   "operand_acc": 0.3432,
+   "unknown_rate": 0.3557
+  },
+  "rslogix500": {
+   "images": 52,
+   "program_exact": 0.0192,
+   "rung_exact": 0.1887,
+   "mnemonic_precision": 0.841,
+   "mnemonic_recall": 0.8398,
+   "mnemonic_f1": 0.8404,
+   "operand_acc": 0.4854,
+   "unknown_rate": 0.3429
+  },
+  "studio5000": {
+   "images": 18,
+   "program_exact": 0.0,
+   "rung_exact": 0.1205,
+   "mnemonic_precision": 0.7791,
+   "mnemonic_recall": 0.7854,
+   "mnemonic_f1": 0.7823,
+   "operand_acc": 0.4545,
+   "unknown_rate": 0.3531
+  },
+  "tia": {
+   "images": 23,
+   "program_exact": 0.0,
+   "rung_exact": 0.0094,
+   "mnemonic_precision": 0.7241,
+   "mnemonic_recall": 0.8006,
+   "mnemonic_f1": 0.7604,
+   "operand_acc": 0.1732,
+   "unknown_rate": 0.4905
+  }
+ },
+ "by_augmentation": {
+  "heavy": {
+   "images": 40,
+   "program_exact": 0.025,
+   "rung_exact": 0.0417,
+   "mnemonic_precision": 0.6624,
+   "mnemonic_recall": 0.6774,
+   "mnemonic_f1": 0.6698,
+   "operand_acc": 0.1988,
+   "unknown_rate": 0.4495
+  },
+  "light": {
+   "images": 66,
+   "program_exact": 0.0152,
+   "rung_exact": 0.1454,
+   "mnemonic_precision": 0.8309,
+   "mnemonic_recall": 0.8644,
+   "mnemonic_f1": 0.8473,
+   "operand_acc": 0.457,
+   "unknown_rate": 0.3718
+  },
+  "none": {
+   "images": 44,
+   "program_exact": 0.0227,
+   "rung_exact": 0.1872,
+   "mnemonic_precision": 0.8235,
+   "mnemonic_recall": 0.8734,
+   "mnemonic_f1": 0.8478,
+   "operand_acc": 0.5167,
+   "unknown_rate": 0.3571
+  }
+ },
+ "examples_wrong": [
+  {
+   "image": "test_000000.png",
+   "style": "dark",
+   "augment": "none",
+   "gt": "[LEQ(Status_9,250),LEQ(Speed_SP,5)]ADD(Weight,1500,Status_9);\nXIC(Dryer_4_Part_Det)XIC(Local:3:I.Data.2)XIO(Start_PB)[MOV(200,Weight),OTL(Dryer_4_Fast)];\nXIC(Heater_Photo_Eye)XIO(EStop_OK)RES(Strokes_Count);",
+   "pred": "[LEQ(?,?)NEQ(?,?),LES(?,?)GEQ(?,?)LEQ(?,?)]ADD(?,?,Status_9);\nXIC(Dryer_4_Part_Det)XIC(Local:3:1.Data.2)XIO(Start_PB)[MOV(200,?),OTL(Dryer_4_Fast)];\nXIC(Heater_Photo_Eye)XIO(EStop_OK)RES(Strokes_Count);"
+  },
+  {
+   "image": "test_000001.jpg",
+   "style": "rslogix500",
+   "augment": "heavy",
+   "gt": "[XIC(I:1/6),XIC(O:3/15),XIC(I:2/12)]XIO(I:2/14)XIO(I:1/3)OTE(O:3/15);\n[XIO(O:3/15),XIC(O:3/15)XIC(O:3/15)]XIC(I:1/12)OTL(O:2/10);\nXIC(O:2/10)XIC(I:3/2)GRT(N7:34,15)OTE(O:3/3);\nXIC(T4:10/DN)XIO(B3:1/5)XIC(I:1/7)OTE(O:3/9);\nEND();",
+   "pred": "[XIC(ype),XIC(O:3/15),XIC(I:2/12)]XIO(I:2/14)XIO(I:1/3)OTE(O:3/15);\n[XIO(O:3/15),XIC(O:3/15)XIC(?)]XIC(I:1/12)OTL(0:2.);\n[XIC(ass)XIC(I:3/2)NEQ(?,?)LEQ(?,?),XIC(T4:10/DN)XIO(B3:1/3)XIC(2])][OTE(O:3/3),OTE(O:3/9)];\nEND();"
+  },
+  {
+   "image": "test_000002.png",
+   "style": "tia",
+   "augment": "none",
+   "gt": "// Unlatch Feeder\nXIO(%I0.1)XIC(%I0.7)P(%Q3.6)[OTU(%Q3.6),OTL(\"Batch_Done\")];\n// Comp delay complete\nXIC(#T_Alarm.Q)OTE(%Q3.4);\n// Sorter level alarm\nGRT(#T_Alarm.ET,2#1010)NEQ(#T_Alarm.ET,%MW78)MOV(20,%MW92);\n// Clear accumulators\nXIC(%I1.4)XIO(\"Filler_Open_LS\")RES(#T_Alarm);\nXIC(%I3.4)RES(#T_Alarm);\nXIO(%M76.5)XIO(\"Batch_Done\")NCOIL(%Q0.2);\n// Feeder timer\n[TON(T_Fill8,T#30s),OTL(%M7.2)];",
+   "pred": "XIO(%10.1)XIC(%10.7)P(%Q3.6)[OTU(%Q3.6),OTL(Batch_Done)];\nXIC(#T_Alarm.Q)OTE(%Q3.4);\nGRT(?,?)LEQ(?,?)MOV(?,?);\nXIC(%11.4)XIO(Filler_Open_LS)RES(#T_Alarm);\nXIC(%13.4)RES(#T_Alarm);\nXIO(%M76.5)XIO(Batch_Done)NCOIL(%Q0.2);\n[TP(?,?,?)TON(?,?,?),OTL(%M7.2)];"
+  },
+  {
+   "image": "test_000003.jpg",
+   "style": "tia",
+   "augment": "light",
+   "gt": "// Screw jump\nLBL(M019)XIC(\"Fault_Latch\")OTL(\"Step_Done\");\n// Screw batch counter\nXIO(%M67.2)CTD(#C_Parts,50);\n// Chiller from local or remote\n[XIO(\"Cycle_On\"),XIO(%I0.3)XIC(\"High_LS\"),XIC(\"Press_4_Rev\")XIO(\"Level_Lo\"),XIC(\"Conv_Stop\")]NCOIL(%Q2.7);",
+   "pred": "LBL(MO19)XIC(Fault_Latch)OTL(Step_Done);\nXIO(%M67.2)CTUD(?,?,?);\n[XIO(Cycle_On),XIO(%10.3)XIC(High_LS),XIC(Press_4_Rev)XIO(Level_Lo),XIC(Conv_Stop)]NCOIL(%Q2.7);"
+  },
+  {
+   "image": "test_000004.png",
+   "style": "tia",
+   "augment": "none",
+   "gt": "// Drive Fan and indicators\nP(\"Empty\")XIO(%I1.4)[OTL(%Q3.4),OTL(#tmpOk)];\n// Move Mixer setpoint\nXIO(%I2.1)XIC(%I2.5)MUL(\"Pct_Open\",0.5,%DB9.DBW28);",
+   "pred": "P(Empty)XIO(%11.4)[OTL(%Q3.4),OTL(#tmpOk)];\nXIO(%I2.1)XIC(%12.5)MUL(?,?,?);"
+  },
+  {
+   "image": "test_000007.jpg",
+   "style": "rslogix500",
+   "augment": "light",
+   "gt": "XIO(B3:1/10)[TOF(T4:16,0.01,3000,0),OTL(O:2/3)];\nXIO(I:2/12)TOF(T4:18,0.01,300,0);\nXIC(I:1/10)XIC(I:3/3)RES(T4:16);",
+   "pred": "XIO(3)[TOF(TimeBase_0.01,?,0),OTL(O:2)];\nXIO(MUILUN1:2)TOF(TimeBase0.01,300,0);\nXIC(I:1/10)XIC(I:3/3)RES(T4:16);"
+  },
+  {
+   "image": "test_000008.jpg",
+   "style": "studio5000",
+   "augment": "light",
+   "gt": "LES(Rate,60)OTU(Fault_Latch);\nXIO(Low_LS)XIC(Warmup)TON(Dwell_Timer,500,250);\nXIC(Damper_Run_FB)XIC(Start_PB)[OTL(Fault_Latch),OTU(Tank_1_Lamp)];\nJSR(R32_Drain);\nXIC(Empty)[MOV(Position,Rate),MOV(-10,Rate),MUL(Rate,Index,Recipe[23])];\nEND();",
+   "pred": "LES(?,?)OTU(Fault_Latch);\nXIO(Low_LS)XIC(Warmup)TON(Dwell_Timer,500,250);\nXIC(Damper_Run_FB)XIC(StartPB)[[OTL(FaultLatch),OTU(Tank_1_Lamp)],JSR(?)];\nXIC(Empty)[MOV(?,Rate),MOV(?,?),MUL(?,?,?)];\nEND();"
+  },
+  {
+   "image": "test_000009.png",
+   "style": "studio5000",
+   "augment": "heavy",
+   "gt": "// Silo level alarm\nXIC(Hold_1)EQU(Delta,1)LES(Delta,500)[MOV(250,Delta),XIO(Fault_Latch)MOV(Buffer[9],Delta),OTL(Capper_Alarm)];\n// Damper enable\nXIO(Door_SW)[XIC(Silo_Prox),XIO(Clamp_Ready)[XIC(Rev),XIO(Capper_Alarm)]]OTE(Flag);\nXIO(Run_FB)OTE(Cyl_Close);\n// Chiller after time elapsed\nXIC(Timer_7.DN)[OTE(Damper_Close),TOF(Timer_18,500,0)];",
+   "pred": "XIC(Hold_1)EQU(?,?)LEQ(?,?)LES(?,?)[,MOV(?,?),XIO(Fault_Latch)MOV(?,Delta),OTL(Capper_Alarm)];\n[XIO(Door_SW),XIO(Run_FB)][,XIC(Timer_7.0N)][XIC(Silo_Prox),,XIO(Clamp_Ready)[XIC(Rev),XIO(Capper_Alarm)]][,OTE(Cyl_Close)];\n[OTE(Damper_Close),TOF(?,500,0)];"
+  },
+  {
+   "image": "test_000010.jpg",
+   "style": "studio5000",
+   "augment": "light",
+   "gt": "MOV(Setpoint,Total_8);\nXIC(Guard_OK)XIC(Alarm_Bits[3])OTE(Local:5:O.Data.9);\n// Skip Pump when bypassed\nXIO(Local:2:I.Data.5)XIC(Mem_Bit)JMP(End_Seq_6);\nXIC(Jog_PB)XIO(Door_Door_SW)OSR(Fault_Latch,Alarm_Bits[15]);\nOR(Status,240,Out_Val);\nEND();",
+   "pred": "MOV(Setpoint,Total_8);\nXIC(Guard_OK)XIC(Alarm_Bits[3])OTE(Local:5:0.Data.9);\nXIO(Local:2:1.Data.5)XIC(Mem_Bit)JMP(End_Seq_6);\nXIC(Jog_PB)XIO(Door_Door_SW)[OSR(?,?),OR(?,?,Out_Val)];\nEND();"
+  },
+  {
+   "image": "test_000011.jpg",
+   "style": "iec",
+   "augment": "light",
+   "gt": "XIC(#T_Fill.Q)XIO(\"Elev_Door_SW\")[OTE(\"Capper_Fwd\"),OTE(%Q1.3)];\n[XIO(\"Capper_Fwd\"),[XIO(\"Capper_Fwd\")XIC(\"Comp_Fault\"),XIC(%I0.6)],XIC(%I1.0)]XIC(%I2.0)NCOIL(\"Purge_OK\");\n// Move Elev setpoint\nMUL(%IW70,%MW38,\"Speed_SP\");\n// Drive Capper and indicators\nXIO(\"Ack_PB\")[OTE(%Q0.2),OTE(%Q0.0)];",
+   "pred": "XIC(#T_Fill.Q)XIO(Elev_Door_SW)[OTE(Capper_Fwd),OTE(%Q1.3)];\n[XIO(Capper_Fwd),[XIO(Capper_Fwd)XIC(Comp_Fault),XIC(%10.6)],XIC(%11.0)]XIC(%12.0)[NCOIL(Purge_OK),AND(?,?,?)ADD(?,?,?)];\nXIO(Ack_PB)[OTE(%Q0.2),OTE(%Q0.0)];"
+  },
+  {
+   "image": "test_000012.png",
+   "style": "rslogix500",
+   "augment": "none",
+   "gt": "XIC(I:1/2)XIC(I:2/14)JMP(Q2:6);\nNEQ(N7:37,75)EQU(N7:7,60)OTE(O:3/15);\nXIC(I:1/13)XIO(I:3/15)CTD(C5:7,20,0);\n[XIC(I:1/1),XIC(O:2/6),XIC(I:1/4)]XIO(I:3/14)OTE(O:2/6);\n[[XIO(I:1/11)XIC(O:3/15),XIC(I:1/5)]XIC(N7:3/10),XIC(I:1/10)]XIC(O:3/15)OTU(O:3/15);",
+   "pred": "XIC(I:1/2)XIC(I:2/14)JMP(Q2:6);\nNEQ(?,?)EQU(?,?)OTE(O:3/15);\nXIC(I:1/13)XIO(I:3/15)CTD(?,20,O);\n[XIC(I:1/1),XIC(O:2/6),XIC(I:1/4)]XIO(I:3/14)OTE(O:2/6);\n[[XIO(I:1/11)XIC(O:3/15),XIC(I:1/5)]XIC(N7:3/10),XIC(I:1/10)]XIC(O:3/15)OTU(O:3/15);"
+  },
+  {
+   "image": "test_000013.png",
+   "style": "rslogix500",
+   "augment": "none",
+   "gt": "XIC(I:1/12)XIC(I:1/3)ADD(N7:29,N7:46,F8:8);\nXIC(I:1/1)CTU(C5:0,12,3);",
+   "pred": "XIC(I:1/12)XIC(I:1/3)ADD(?,?,?);\nXIC(I:1/1)CTU(?,12,3);"
+  },
+  {
+   "image": "test_000014.png",
+   "style": "tia",
+   "augment": "none",
+   "gt": "XIC(\"Jog_PB\")XIC(\"Open_LS\")NCOIL(\"Comp_Rev\");\n// Pack Comp bits\nNOT(%DB2.DBW28,\"Press_PV\");\n// Hoist delay timer\nXIO(\"Comp_Rev\")XIO(\"Hoist_Start\")TP(T_Dwell3,T#15s);\n// Mask Hoist status word\nP(\"Start_PB\")XOR(T_Dwell3.ET,15,%DB2.DBW28);\nP(\"Temp_Hi\")XIC(\"Cyl_Full\")XIO(\"Comp_Rev\")NCOIL(\"Hold\");\n// Inverted Dosing status\nN(\"Reset_PB\")NCOIL(%Q3.2);",
+   "pred": "XIC(Jog_PB)XIC(Open_LS)[NCOIL(Comp_Rev),MOV(?,?)NOT(?,?)];\nXIO(Comp_Rev)XIO(Hoist_Start)TON(?,?,?)TP(?,?,?);\nP(Start_PB)XOR(?,?,?);\nP(Temp_Hi)XIC(Cyl_Full)XIO(Comp_Rev)NCOIL(Hold);\nN(Reset_PB)NCOIL(%Q3.2);"
+  },
+  {
+   "image": "test_000015.jpg",
+   "style": "printed",
+   "augment": "heavy",
+   "gt": "// Lamp one-shot\nXIC(Horn_Low_LS)XIC(Auto)[OSR(Cycle_On,Auto_Mode_3),OTE(Hold_7)];\nXIC(Hold_7)JMP(Bypass_7);\n// Drive Horn and indicators\n// Modified 2024-03\nXIC(Sel_Hand)[OTE(Local:2:O.Data.3),CTD(Boxes_Count,20,3)];\n// Mask Door status word\nXIO(Local:4:I.Data.4)XOR(Pct_Open,Press_PV_9,Index);\n// Pump outputs\nXIC(Horn_4_Rev)XIC(Reset_PB)[CTU(CTR_Cycles,144,0),OTL(Capper_Enable)];",
+   "pred": "XIC(Mern_Lew_tS)XIC(23)[OSR(?,?),OTE(teid7)];\nXIC(atd7)JMP(Bypans_7);\nXIC(tolMand)[OTE(tecel.6Bete3),CTD(?,20,?)];\nXIO(Lecet:4::Bete.4)XOR(?,?,Index);\nXIC(tern_4Rew)XIC(Revet_7S)[CTU(?,laa,?),OTL(Cagper_Enablo)];"
+  },
+  {
+   "image": "test_000016.jpg",
+   "style": "dark",
+   "augment": "heavy",
+   "gt": "EQU(COUNT,1)[OR(RAW_VAL,255,RATE),OTE(PULSE)];\nXIO(FAN_4_SEL_HAND)XIO(GATE_4_PHOTO_EYE)MOV(10,DELTA);\nJSR(FILL_SUB);",
+   "pred": "GRT(?,?)EQU(?,?);\n[XOR(?,?,RATE)OR(?,?,RATE),OTE(muse)];\nXIO(FAN_4_SEL_HAND)XIO(GATE_4_PHOTO_EYE)[MOV(10,?),JSR(?)];"
+  }
+ ]
+}

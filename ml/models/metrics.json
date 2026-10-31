@@ -1,0 +1,368 @@
+{
+ "model": "logiclens-yolov8n.onnx",
+ "split": "test",
+ "imgsz": 736,
+ "overall": {
+  "precision": 0.8435,
+  "recall": 0.8586,
+  "mAP50": 0.8912,
+  "mAP50-95": 0.8205
+ },
+ "per_class": {
+  "NO_Contact": {
+   "id": 0,
+   "precision": 0.998,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9089,
+   "instances": 1376
+  },
+  "NC_Contact": {
+   "id": 1,
+   "precision": 0.9986,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.902,
+   "instances": 571
+  },
+  "Positive_Transition": {
+   "id": 2,
+   "precision": 0.9882,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9153,
+   "instances": 52
+  },
+  "Negative_Transition": {
+   "id": 3,
+   "precision": 0.9876,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9239,
+   "instances": 45
+  },
+  "Output_Coil": {
+   "id": 4,
+   "precision": 0.9983,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9052,
+   "instances": 422
+  },
+  "Negated_Coil": {
+   "id": 5,
+   "precision": 0.9886,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9171,
+   "instances": 52
+  },
+  "Set_Coil": {
+   "id": 6,
+   "precision": 0.9206,
+   "recall": 1.0,
+   "mAP50": 0.986,
+   "mAP50-95": 0.9053,
+   "instances": 99
+  },
+  "Reset_Coil": {
+   "id": 7,
+   "precision": 0.9872,
+   "recall": 0.9491,
+   "mAP50": 0.9847,
+   "mAP50-95": 0.9069,
+   "instances": 81
+  },
+  "TON_Timer": {
+   "id": 8,
+   "precision": 0.5889,
+   "recall": 0.9091,
+   "mAP50": 0.9035,
+   "mAP50-95": 0.897,
+   "instances": 33
+  },
+  "TOF_Timer": {
+   "id": 9,
+   "precision": 0.8382,
+   "recall": 0.9722,
+   "mAP50": 0.9773,
+   "mAP50-95": 0.9667,
+   "instances": 36
+  },
+  "RTO_Timer": {
+   "id": 10,
+   "precision": 0.8172,
+   "recall": 0.9487,
+   "mAP50": 0.9511,
+   "mAP50-95": 0.9469,
+   "instances": 39
+  },
+  "TP_Timer": {
+   "id": 11,
+   "precision": 0.883,
+   "recall": 0.8714,
+   "mAP50": 0.9395,
+   "mAP50-95": 0.9377,
+   "instances": 26
+  },
+  "CTU_Counter": {
+   "id": 12,
+   "precision": 0.9777,
+   "recall": 0.9778,
+   "mAP50": 0.9898,
+   "mAP50-95": 0.9824,
+   "instances": 45
+  },
+  "CTD_Counter": {
+   "id": 13,
+   "precision": 0.7845,
+   "recall": 0.95,
+   "mAP50": 0.9655,
+   "mAP50-95": 0.9608,
+   "instances": 40
+  },
+  "CTUD_Counter": {
+   "id": 14,
+   "precision": 0.6379,
+   "recall": 1.0,
+   "mAP50": 0.8527,
+   "mAP50-95": 0.8417,
+   "instances": 25
+  },
+  "RES_Reset": {
+   "id": 15,
+   "precision": 1.0,
+   "recall": 0.9869,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9135,
+   "instances": 46
+  },
+  "EQU_Equal": {
+   "id": 16,
+   "precision": 0.8933,
+   "recall": 0.9459,
+   "mAP50": 0.9775,
+   "mAP50-95": 0.9592,
+   "instances": 37
+  },
+  "NEQ_NotEqual": {
+   "id": 17,
+   "precision": 0.905,
+   "recall": 0.6905,
+   "mAP50": 0.8533,
+   "mAP50-95": 0.8382,
+   "instances": 42
+  },
+  "GRT_GreaterThan": {
+   "id": 18,
+   "precision": 0.7031,
+   "recall": 0.871,
+   "mAP50": 0.8833,
+   "mAP50-95": 0.8758,
+   "instances": 31
+  },
+  "LES_LessThan": {
+   "id": 19,
+   "precision": 0.6142,
+   "recall": 0.6825,
+   "mAP50": 0.7925,
+   "mAP50-95": 0.7774,
+   "instances": 42
+  },
+  "GEQ_GreaterEqual": {
+   "id": 20,
+   "precision": 0.3561,
+   "recall": 0.4571,
+   "mAP50": 0.4883,
+   "mAP50-95": 0.4719,
+   "instances": 35
+  },
+  "LEQ_LessEqual": {
+   "id": 21,
+   "precision": 0.3823,
+   "recall": 0.7863,
+   "mAP50": 0.5084,
+   "mAP50-95": 0.5015,
+   "instances": 37
+  },
+  "ADD_Addition": {
+   "id": 22,
+   "precision": 0.7068,
+   "recall": 0.697,
+   "mAP50": 0.8087,
+   "mAP50-95": 0.7782,
+   "instances": 33
+  },
+  "SUB_Subtraction": {
+   "id": 23,
+   "precision": 0.8292,
+   "recall": 0.5,
+   "mAP50": 0.7307,
+   "mAP50-95": 0.7166,
+   "instances": 38
+  },
+  "MUL_Multiplication": {
+   "id": 24,
+   "precision": 1.0,
+   "recall": 0.529,
+   "mAP50": 0.7437,
+   "mAP50-95": 0.743,
+   "instances": 20
+  },
+  "DIV_Division": {
+   "id": 25,
+   "precision": 0.9975,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9752,
+   "instances": 27
+  },
+  "MOV_Move": {
+   "id": 26,
+   "precision": 0.8681,
+   "recall": 0.9651,
+   "mAP50": 0.9854,
+   "mAP50-95": 0.9754,
+   "instances": 86
+  },
+  "OSR_OneShotRising": {
+   "id": 27,
+   "precision": 0.9715,
+   "recall": 0.9773,
+   "mAP50": 0.9941,
+   "mAP50-95": 0.98,
+   "instances": 44
+  },
+  "OSF_OneShotFalling": {
+   "id": 28,
+   "precision": 0.9493,
+   "recall": 1.0,
+   "mAP50": 0.9944,
+   "mAP50-95": 0.9944,
+   "instances": 34
+  },
+  "AND_Bitwise": {
+   "id": 29,
+   "precision": 0.4831,
+   "recall": 0.4231,
+   "mAP50": 0.6365,
+   "mAP50-95": 0.6311,
+   "instances": 26
+  },
+  "OR_Bitwise": {
+   "id": 30,
+   "precision": 0.5987,
+   "recall": 0.9459,
+   "mAP50": 0.8125,
+   "mAP50-95": 0.797,
+   "instances": 37
+  },
+  "XOR_Bitwise": {
+   "id": 31,
+   "precision": 0.437,
+   "recall": 0.4118,
+   "mAP50": 0.458,
+   "mAP50-95": 0.4506,
+   "instances": 34
+  },
+  "NOT_Bitwise": {
+   "id": 32,
+   "precision": 0.888,
+   "recall": 0.9324,
+   "mAP50": 0.9567,
+   "mAP50-95": 0.9535,
+   "instances": 51
+  },
+  "JMP_Jump": {
+   "id": 33,
+   "precision": 0.8368,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9228,
+   "instances": 45
+  },
+  "LBL_Label": {
+   "id": 34,
+   "precision": 0.984,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9113,
+   "instances": 39
+  },
+  "JSR_Subroutine": {
+   "id": 35,
+   "precision": 0.9834,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9621,
+   "instances": 40
+  },
+  "MCR_MasterControl": {
+   "id": 36,
+   "precision": 0.9863,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.913,
+   "instances": 39
+  },
+  "END_End": {
+   "id": 37,
+   "precision": 0.9907,
+   "recall": 1.0,
+   "mAP50": 0.995,
+   "mAP50-95": 0.9168,
+   "instances": 68
+  },
+  "Branch_Start": {
+   "id": 40,
+   "precision": 0.9615,
+   "recall": 0.9944,
+   "mAP50": 0.9877,
+   "mAP50-95": 0.6206,
+   "instances": 427
+  },
+  "Branch_End": {
+   "id": 41,
+   "precision": 0.9701,
+   "recall": 0.9906,
+   "mAP50": 0.9933,
+   "mAP50-95": 0.6039,
+   "instances": 427
+  },
+  "Power_Rail_Left": {
+   "id": 42,
+   "precision": 0.9192,
+   "recall": 0.3414,
+   "mAP50": 0.6841,
+   "mAP50-95": 0.2324,
+   "instances": 300
+  },
+  "Power_Rail_Right": {
+   "id": 43,
+   "precision": 0.8185,
+   "recall": 0.3567,
+   "mAP50": 0.6574,
+   "mAP50-95": 0.2277,
+   "instances": 300
+  }
+ },
+ "latency": [
+  {
+   "threads": 1,
+   "images": 57,
+   "mean_ms": 137.2,
+   "p50_ms": 135.0,
+   "p95_ms": 151.2,
+   "impl": "backend"
+  },
+  {
+   "threads": 2,
+   "images": 57,
+   "mean_ms": 97.6,
+   "p50_ms": 95.7,
+   "p95_ms": 114.3,
+   "impl": "backend"
+  }
+ ],
+ "val_seconds": 35.1
+}

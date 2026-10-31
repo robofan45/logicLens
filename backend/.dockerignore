@@ -1,0 +1,8 @@
+# Only app/ and requirements.txt are needed in the image.
+*
+!app/
+!requirements.txt
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.coverage

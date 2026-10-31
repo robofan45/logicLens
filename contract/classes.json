@@ -1,0 +1,270 @@
+{
+ "version": "1.0",
+ "nc": 44,
+ "classes": [
+  {
+   "id": 0,
+   "name": "NO_Contact",
+   "mnemonic": "XIC",
+   "structural": null
+  },
+  {
+   "id": 1,
+   "name": "NC_Contact",
+   "mnemonic": "XIO",
+   "structural": null
+  },
+  {
+   "id": 2,
+   "name": "Positive_Transition",
+   "mnemonic": "P",
+   "structural": null
+  },
+  {
+   "id": 3,
+   "name": "Negative_Transition",
+   "mnemonic": "N",
+   "structural": null
+  },
+  {
+   "id": 4,
+   "name": "Output_Coil",
+   "mnemonic": "OTE",
+   "structural": null
+  },
+  {
+   "id": 5,
+   "name": "Negated_Coil",
+   "mnemonic": "NCOIL",
+   "structural": null
+  },
+  {
+   "id": 6,
+   "name": "Set_Coil",
+   "mnemonic": "OTL",
+   "structural": null
+  },
+  {
+   "id": 7,
+   "name": "Reset_Coil",
+   "mnemonic": "OTU",
+   "structural": null
+  },
+  {
+   "id": 8,
+   "name": "TON_Timer",
+   "mnemonic": "TON",
+   "structural": null
+  },
+  {
+   "id": 9,
+   "name": "TOF_Timer",
+   "mnemonic": "TOF",
+   "structural": null
+  },
+  {
+   "id": 10,
+   "name": "RTO_Timer",
+   "mnemonic": "RTO",
+   "structural": null
+  },
+  {
+   "id": 11,
+   "name": "TP_Timer",
+   "mnemonic": "TP",
+   "structural": null
+  },
+  {
+   "id": 12,
+   "name": "CTU_Counter",
+   "mnemonic": "CTU",
+   "structural": null
+  },
+  {
+   "id": 13,
+   "name": "CTD_Counter",
+   "mnemonic": "CTD",
+   "structural": null
+  },
+  {
+   "id": 14,
+   "name": "CTUD_Counter",
+   "mnemonic": "CTUD",
+   "structural": null
+  },
+  {
+   "id": 15,
+   "name": "RES_Reset",
+   "mnemonic": "RES",
+   "structural": null
+  },
+  {
+   "id": 16,
+   "name": "EQU_Equal",
+   "mnemonic": "EQU",
+   "structural": null
+  },
+  {
+   "id": 17,
+   "name": "NEQ_NotEqual",
+   "mnemonic": "NEQ",
+   "structural": null
+  },
+  {
+   "id": 18,
+   "name": "GRT_GreaterThan",
+   "mnemonic": "GRT",
+   "structural": null
+  },
+  {
+   "id": 19,
+   "name": "LES_LessThan",
+   "mnemonic": "LES",
+   "structural": null
+  },
+  {
+   "id": 20,
+   "name": "GEQ_GreaterEqual",
+   "mnemonic": "GEQ",
+   "structural": null
+  },
+  {
+   "id": 21,
+   "name": "LEQ_LessEqual",
+   "mnemonic": "LEQ",
+   "structural": null
+  },
+  {
+   "id": 22,
+   "name": "ADD_Addition",
+   "mnemonic": "ADD",
+   "structural": null
+  },
+  {
+   "id": 23,
+   "name": "SUB_Subtraction",
+   "mnemonic": "SUB",
+   "structural": null
+  },
+  {
+   "id": 24,
+   "name": "MUL_Multiplication",
+   "mnemonic": "MUL",
+   "structural": null
+  },
+  {
+   "id": 25,
+   "name": "DIV_Division",
+   "mnemonic": "DIV",
+   "structural": null
+  },
+  {
+   "id": 26,
+   "name": "MOV_Move",
+   "mnemonic": "MOV",
+   "structural": null
+  },
+  {
+   "id": 27,
+   "name": "OSR_OneShotRising",
+   "mnemonic": "OSR",
+   "structural": null
+  },
+  {
+   "id": 28,
+   "name": "OSF_OneShotFalling",
+   "mnemonic": "OSF",
+   "structural": null
+  },
+  {
+   "id": 29,
+   "name": "AND_Bitwise",
+   "mnemonic": "AND",
+   "structural": null
+  },
+  {
+   "id": 30,
+   "name": "OR_Bitwise",
+   "mnemonic": "OR",
+   "structural": null
+  },
+  {
+   "id": 31,
+   "name": "XOR_Bitwise",
+   "mnemonic": "XOR",
+   "structural": null
+  },
+  {
+   "id": 32,
+   "name": "NOT_Bitwise",
+   "mnemonic": "NOT",
+   "structural": null
+  },
+  {
+   "id": 33,
+   "name": "JMP_Jump",
+   "mnemonic": "JMP",
+   "structural": null
+  },
+  {
+   "id": 34,
+   "name": "LBL_Label",
+   "mnemonic": "LBL",
+   "structural": null
+  },
+  {
+   "id": 35,
+   "name": "JSR_Subroutine",
+   "mnemonic": "JSR",
+   "structural": null
+  },
+  {
+   "id": 36,
+   "name": "MCR_MasterControl",
+   "mnemonic": "MCR",
+   "structural": null
+  },
+  {
+   "id": 37,
+   "name": "END_End",
+   "mnemonic": "END",
+   "structural": null
+  },
+  {
+   "id": 38,
+   "name": "Horizontal_Wire",
+   "mnemonic": null,
+   "structural": "deprecated"
+  },
+  {
+   "id": 39,
+   "name": "Vertical_Wire",
+   "mnemonic": null,
+   "structural": "deprecated"
+  },
+  {
+   "id": 40,
+   "name": "Branch_Start",
+   "mnemonic": null,
+   "structural": "branch_left"
+  },
+  {
+   "id": 41,
+   "name": "Branch_End",
+   "mnemonic": null,
+   "structural": "branch_right"
+  },
+  {
+   "id": 42,
+   "name": "Power_Rail_Left",
+   "mnemonic": null,
+   "structural": "rail_left"
+  },
+  {
+   "id": 43,
+   "name": "Power_Rail_Right",
+   "mnemonic": null,
+   "structural": "rail_right"
+  }
+ ]
+}

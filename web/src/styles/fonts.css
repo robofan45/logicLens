@@ -1,0 +1,12 @@
+/* Self-hosted fonts (no third-party requests; works offline and behind strict CSPs).
+   Latin + Latin Extended only: tag names and the UI are Latin script; other scripts fall back
+   to the system font. Keeps the standalone file small. */
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/inter/latin-700.css";
+@import "@fontsource/inter/latin-800.css";
+@import "@fontsource/inter/latin-ext-400.css";
+@import "@fontsource/inter/latin-ext-600.css";
+@import "@fontsource/fira-code/latin-400.css";
+@import "@fontsource/fira-code/latin-500.css";

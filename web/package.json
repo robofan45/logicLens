@@ -1,0 +1,44 @@
+{
+  "name": "logiclens-web",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node node_modules/vite/bin/vite.js",
+    "build": "node node_modules/typescript/bin/tsc --noEmit && node node_modules/vite/bin/vite.js build",
+    "build:standalone": "node node_modules/typescript/bin/tsc --noEmit && node node_modules/vite/bin/vite.js build --mode standalone && node scripts/finish-standalone.mjs",
+    "preview": "node node_modules/vite/bin/vite.js preview",
+    "typecheck": "node node_modules/typescript/bin/tsc --noEmit && node node_modules/typescript/bin/tsc --noEmit -p tsconfig.test.json",
+    "test": "node node_modules/vitest/vitest.mjs run",
+    "test:unit": "node node_modules/vitest/vitest.mjs run tests/unit",
+    "test:integration": "node node_modules/vitest/vitest.mjs run tests/integration",
+    "coverage": "node node_modules/vitest/vitest.mjs run --coverage"
+  },
+  "dependencies": {
+    "@fontsource/fira-code": "5.2.6",
+    "@fontsource/inter": "5.2.6",
+    "lucide-react": "0.487.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router": "7.18.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.1.12",
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/react": "16.3.0",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "22.10.2",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.7.0",
+    "@vitest/coverage-v8": "4.1.12",
+    "fast-check": "4.3.0",
+    "jsdom": "26.1.0",
+    "tailwindcss": "4.1.12",
+    "typescript": "5.6.3",
+    "vite": "6.4.5",
+    "vite-plugin-singlefile": "2.3.3",
+    "vitest": "4.1.12"
+  },
+  "description": "LogicLens web app: PLC ladder-logic analyzer (deterministic engine runs in the browser)."
+}

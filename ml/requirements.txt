@@ -1,0 +1,12 @@
+# LogicLens ml/ - pinned. Generator + tests need only the first block.
+#   pip install -r requirements.txt                      (generator, tests, ONNX export/eval)
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu   (CPU training)
+numpy==2.5.3
+pillow==13.0.0
+opencv-python-headless==5.0.0.93
+PyYAML==6.0.3
+pytest==9.1.1
+# training / export / evaluation (Ultralytics is AGPL-3.0 - see models/model_card.md)
+ultralytics==8.4.194
+onnx==1.23.2
+onnxruntime==1.29.0

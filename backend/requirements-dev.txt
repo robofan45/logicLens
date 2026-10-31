@@ -1,0 +1,10 @@
+# Test and audit tooling (not installed in the Docker image).
+-r requirements.txt
+pytest==9.1.1
+pytest-cov==7.1.0
+httpx==0.28.1               # TestClient transport
+jsonschema==4.26.0          # validates parse output against contract/program.schema.json
+fakeredis==2.40.0
+onnx==1.23.2                # builds a tiny real ONNX model for the onnxruntime tests
+pip-audit==2.10.1
+bandit==1.9.4

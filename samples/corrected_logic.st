@@ -1,0 +1,1 @@
+IF I:0/0 THEN O:0/0 := 1; END_IF;
